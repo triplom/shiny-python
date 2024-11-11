@@ -31,7 +31,7 @@ docker run -p 8080:8080  openanalytics/shinyproxy-shiny-for-python-demo
 This will start the container and map port 8080 on the host to port 8080 in the container.
 
 Verify the application is running:
-Open a web browser and go to http://localhost:8080. You should see the output of your Python application.
+Open a web browser and go to [http://localhost:8080](http://localhost:8080). You should see the output of your Python application.
 
 Alternatively, you can use a tool like curl to make a request to the application:
 
@@ -48,6 +48,22 @@ docker logs <container_id>
 Replace <container_id> with the actual ID or name of the running container.
 
 By following these steps, you can verify that the Docker image was built correctly and the Python application is running as expected inside the container. This will help you ensure the application is working as intended before deploying it to a production environment.
+
+## Alternatively, run with Docker-compose
+
+To use this Docker Compose file, save it as docker-compose.yml in the same directory as your Dockerfile and app.py file.
+
+Then, you can start the application using the following command:
+
+```bash
+docker-compose up -d
+```
+
+This will build the Docker image, if it doesn't already exist, and start the container in detached mode (-d).
+
+Once the container is running, you can access the application at [http://localhost:8080](http://localhost:8080).
+
+The advantage of using Docker Compose is that it simplifies the process of managing multiple containers and their dependencies. It also allows you to easily scale your application by adding more services or instances of the same service.
 
 ## ShinyProxy Configuration
 
