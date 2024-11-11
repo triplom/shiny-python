@@ -65,7 +65,10 @@ Packaging the Shiny for Python app in Docker is essential for deployment with Sh
 
    # Install Shiny for Python and any additional dependencies
    RUN pip install shiny
-
+   ## Optional # Copy the requirements file into the container
+    # COPY requirements.txt .
+    # Install the required Python packages
+    # RUN pip3 install -r requirements.txt 
    # Copy the app into the container
    COPY app.py /app/app.py
    WORKDIR /app
@@ -75,6 +78,8 @@ Packaging the Shiny for Python app in Docker is essential for deployment with Sh
 
    # Command to run the application
    CMD ["shiny", "run", "--app", "app.py", "--port", "8000", "--host", "0.0.0.0"]
+   # For Gunicorn # Command to run the application using Gunicorn with Uvicorn workers
+   # CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8080", "-k", "uvicorn.workers.UvicornWorker"] 
    ```
 
 2. **Build the Docker Image**
