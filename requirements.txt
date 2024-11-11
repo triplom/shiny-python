@@ -1,5 +1,4 @@
 shiny
 matplotlib
 numpy
-guicorn
-pandas
+gunicorn
