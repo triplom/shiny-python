@@ -60,24 +60,24 @@ Packaging the Shiny for Python app in Docker is essential for deployment with Sh
    Create a `Dockerfile` to define the image configuration:
 
    ```Dockerfile
-   # Start with a base image that has Python installed
-   FROM python:3.10-slim
+   # Use the official Python image from the Docker Hub
 
-   # Install Shiny for Python and any additional dependencies
-   RUN pip install shiny
-   ## Optional # Copy the requirements file into the container
-    # COPY requirements.txt .
+    FROM python:3.10-slim
+    # Set the working directory in the container
+    WORKDIR /app
+    # Copy the requirements file into the container
+    COPY requirements.txt .
     # Install the required Python packages
-    # RUN pip3 install -r requirements.txt 
-   # Copy the app into the container
-   COPY app.py /app/app.py
-   WORKDIR /app
+    RUN pip install --no-cache-dir --upgrade pip && \
+        pip install --no-cache-dir shiny && \
+        pip install --no-cache-dir -r requirements.txt
 
-   # Expose the port Shiny for Python will run on
-   EXPOSE 8000
-
-   # Command to run the application
-   CMD ["shiny", "run", "--app", "app.py", "--port", "8000", "--host", "0.0.0.0"]
+    # Copy the application code into the container
+    COPY . .
+    # Expose port 8000 to the outside world
+    EXPOSE 8000
+    # Command to run the Shiny application
+    CMD ["shiny", "run", "--port", "8000", "--host", "0.0.0.0"]
    # For Gunicorn # Command to run the application using Gunicorn with Uvicorn workers
    # CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8080", "-k", "uvicorn.workers.UvicornWorker"] 
    ```
